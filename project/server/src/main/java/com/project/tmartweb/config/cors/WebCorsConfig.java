@@ -9,13 +9,15 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class WebCorsConfig {
     @Bean
     public WebMvcConfigurer corsController() {
+        String frontendUrl = System.getProperty("link.frontend");
         return new WebMvcConfigurer() {
             @SuppressWarnings("null")
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins("http://localhost:8080", "https://tmart-web.vercel.app")
-                        .allowedMethods("PUT", "DELETE", "GET", "POST");
+                        .allowedOrigins(frontendUrl, "https://tmart-web.vercel.app")
+                        .allowedMethods("PUT", "DELETE", "GET", "POST")
+                        .exposedHeaders("Content-Disposition");
             }
         };
     }

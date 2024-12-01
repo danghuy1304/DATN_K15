@@ -26,7 +26,7 @@
     padding: 10px;
 }
 
-.admin-modal__section .modal-header>button {
+.admin-modal__section .modal-header > button {
     background-color: transparent;
     padding: 0 5px;
     border: none;
@@ -38,18 +38,24 @@
     overflow-y: auto;
 }
 
-.admin-modal__section .modal-body .form-group .form-item>textarea {
+.admin-modal__section .modal-body .form-group .form-item > textarea {
     height: 100px;
     max-height: 100px;
 }
 
-.admin-modal__section .modal-body .form-group .form-item>img {
+.admin-modal__section .modal-body .form-group .form-item > img {
     width: 18%;
     margin: 0 1%;
 }
 
-.admin-modal__section .modal-body .form-group .btn-submit>button {
-    width: 100px;
+.order-modal-btn {
+    display: flex;
+    gap: 10px;
+    justify-content: space-between;
+}
+
+.admin-modal__section .modal-body .form-group .btn-submit > button {
+    min-width: 100px;
 }
 
 .admin-modal__container .loading {
@@ -115,7 +121,7 @@
     gap: 10px;
 }
 
-.detail-body-content .body-content-product>img {
+.detail-body-content .body-content-product > img {
     width: 60px;
     border: 1px solid var(--color-border);
     border-radius: var(--border-radius);
