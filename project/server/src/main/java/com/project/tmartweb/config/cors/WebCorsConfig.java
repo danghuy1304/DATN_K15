@@ -13,6 +13,7 @@ public class WebCorsConfig {
 
     @Bean
     public WebMvcConfigurer corsController() {
+        String frontendUrl = System.getProperty("link.frontend");
         return new WebMvcConfigurer() {
             @SuppressWarnings("null")
             @Override
