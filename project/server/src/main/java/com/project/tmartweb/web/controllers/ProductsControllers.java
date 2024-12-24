@@ -43,16 +43,35 @@ public class ProductsControllers {
         return ResponseEntity.ok(res);
     }
 
+    @GetMapping("/filter")
+    public ResponseEntity<?> filterProducts(
+            @RequestParam(name = "keyword", required = false) String keyword,
+            @RequestParam(name = "page") int page,
+            @RequestParam(name = "perPage") int perPage,
+            @RequestParam(name = "discount", required = false) String discount,
+            @RequestParam(name = "title", required = false) String title,
+            @RequestParam(name = "price", required = false) String price,
+            @RequestParam(name = "categoryId", required = false) UUID categoryId,
+            @RequestParam(name = "isStock", required = false) boolean isStock,
+            @RequestParam(name = "productId", required = false) String productId
+    ) {
+        var res = iProductService.getAllByFilter(
+                keyword, title, discount, price, productId,
+                categoryId, isStock, page, perPage);
+        return ResponseEntity.ok(res);
+    }
+
     @GetMapping("/category/{id}")
-    public ResponseEntity<?> getProductsByCategoryId(@PathVariable UUID id,
-                                                     @RequestParam(name = "page", required = false) int page,
-                                                     @RequestParam(name = "perPage", required = false) int perPage) {
+    public ResponseEntity<?> getProductsByCategoryId(
+            @PathVariable UUID id,
+            @RequestParam(name = "page", required = false) int page,
+            @RequestParam(name = "perPage", required = false) int perPage) {
         var result = iProductService.getAllProductsByCategory(id, page, perPage);
         return ResponseEntity.ok(result);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getProduct(@PathVariable UUID id) {
+    public ResponseEntity<?> getProduct(@PathVariable String id) {
         return ResponseEntity.ok(iProductService.getById(id));
     }
 
@@ -94,7 +113,7 @@ public class ProductsControllers {
     @PostMapping("/upload-image/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> uploadImage(
-            @PathVariable UUID id,
+            @PathVariable String id,
             @RequestPart("images") List<MultipartFile> files
     ) {
         String result = iImageProductService.uploadImages(id, files);
@@ -103,16 +122,23 @@ public class ProductsControllers {
 
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> updateProduct(@PathVariable UUID id, @RequestBody ProductDTO productDTO) {
+    public ResponseEntity<?> updateProduct(@PathVariable String id, @RequestBody ProductDTO productDTO) {
         var result = iProductService.update(id, productDTO);
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> deleteProduct(@PathVariable UUID id) {
+    public ResponseEntity<?> deleteProduct(@PathVariable String id) {
         Product product = iProductService.getById(id);
         iProductService.delete(product);
         return ResponseEntity.status(HttpStatus.OK).body("Delete success");
+    }
+
+    @DeleteMapping("/delete-images")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> deleteImages(@RequestBody List<UUID> uuids) {
+        iImageProductService.deleteMultiple(uuids);
+        return ResponseEntity.status(HttpStatus.OK).body("OK");
     }
 }

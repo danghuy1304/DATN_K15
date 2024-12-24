@@ -12,6 +12,8 @@ export const useProductStore = defineStore('product', {
         productsByCategory: {},
         product: {},
         loading: false,
+        page: 0,
+        perPage: 6,
     }),
     getters: {
         getProducts(state) {
@@ -95,7 +97,8 @@ export const useProductStore = defineStore('product', {
                 this.product = res;
                 if (res.status === 200) {
                     toastify('Cập nhật sản phẩm thành công', 'success');
-                    await this.fetchGetAll(0, 12);
+                    await this.fetchGetAll(this.page, this.perPage);
+                    return res.data;
                 }
             } catch (error) {
                 dialog('Cập nhật sản phẩm thất bại', 'error', error?.response?.data?.userMessage);
@@ -111,7 +114,7 @@ export const useProductStore = defineStore('product', {
                 const res = await productService.insert(data);
                 if (res.status === 201) {
                     dialog('Thêm sản phẩm thành công', 'success', null);
-                    await this.fetchGetAll(0, 12);
+                    await this.fetchGetAll(this.page, this.perPage);
                     return res.data;
                 }
             } catch (error) {
@@ -127,7 +130,7 @@ export const useProductStore = defineStore('product', {
                 this.loading = true;
                 const res = await productService.uploadImage(id, data);
                 if (res.status === 200) {
-                    await this.fetchGetAll(0, 12);
+                    await this.fetchGetAll(this.page, this.perPage);
                 }
             } catch (error) {
                 dialog('Thêm ảnh sản phẩm thất bại', 'error', error?.response?.data?.userMessage);
@@ -154,6 +157,7 @@ export const useProductStore = defineStore('product', {
 
         async fetchGetAllSale(page, perPage) {
             try {
+                this.loading = true;
                 const res = await productService.getAllSale(page, perPage);
                 if (res.status === 200) {
                     this.productListSale = res.data.data;
@@ -176,6 +180,41 @@ export const useProductStore = defineStore('product', {
             } catch (error) {
                 toastify('Lỗi tìm sản phẩm', 'error');
                 console.error(error);
+            } finally {
+                this.loading = false;
+            }
+        },
+
+        async fetchFilterProduct(
+            keyword, page, perPage, discount,
+            title, price, categoryId, isStock, productId) {
+            try {
+                this.loading = true;
+                const res = await productService.filterProduct(
+                    keyword, page, perPage, discount,
+                    title, price, categoryId, isStock, productId);
+                if (res.status === 200) {
+                    this.products = res.data;
+                    this.pagination = res.data.pagination;
+                }
+            } catch (error) {
+                toastify('Lỗi tìm sản phẩm', 'error');
+                console.error(error);
+            } finally {
+                this.loading = false;
+            }
+        },
+
+        async fetchDeleteImages(uuids) {
+            try {
+                this.loading = true;
+                const res = await productService.deleteImages(uuids);
+                if (res.status === 200) {
+                    await this.fetchGetAll(this.page, this.perPage);
+                }
+            } catch (error) {
+                console.error(error);
+                dialog('Lỗi cập nhật hình ảnh', 'error', error?.response?.data?.userMessage);
             } finally {
                 this.loading = false;
             }

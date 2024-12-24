@@ -9,7 +9,7 @@ create table users(
 	id uuid primary key,
 	user_name varchar(50),
 	password varchar(100),
-	image varchar(100),
+	image text,
 	full_name varchar(100),
 	phone_number varchar(12),
 	email varchar(120),
@@ -33,10 +33,11 @@ create table categories(
 );
 
 create table products(
-	id uuid primary key,
+	id varchar(100) primary key,
 	category_id uuid references categories(id),
 	title varchar(250),
-	price double precision,
+	origin_price double precision,
+	sale_price double precision,
 	discount double precision,
 	description text,
 	deleted bool,
@@ -49,8 +50,8 @@ create table products(
 
 create table galeries(
 	id uuid primary key,
-	product_id uuid references products(id),
-	image varchar(100),
+	product_id varchar(100) references products(id),
+	image text,
 	created_at timestamp,
 	created_by varchar(100),
   	updated_at timestamp,
@@ -60,10 +61,10 @@ create table galeries(
 create table feedbacks(
 	id uuid primary key,
 	user_id uuid references users(id),
-	product_id uuid references products(id),
+	product_id varchar(100) references products(id),
 	note text,
 	star int default 0,
-	image varchar(100),
+	image text,
 	created_at timestamp,
 	created_by varchar(100),
   	updated_at timestamp,
@@ -102,7 +103,7 @@ create table orders(
 create table order_detail(
 	id uuid primary key,
 	order_id uuid references orders(id),
-	product_id uuid references products(id),
+	product_id varchar(100) references products(id),
 	price double precision check(price >= 0),
 	quantity int check(quantity > 0),
 	total_money double precision,
@@ -115,8 +116,8 @@ create table order_detail(
 create table image_product(
 	id uuid primary key,
 	image_name varchar(100),
-	product_id uuid references products(id) on delete cascade,
-	url varchar(100),
+	product_id varchar(100) references products(id) on delete cascade,
+	url text,
 	created_at timestamp,
 	created_by varchar(100),
   	updated_at timestamp,
@@ -138,7 +139,7 @@ create table notifications(
 create table carts(
 	id uuid primary key,
 	user_id uuid references users(id),
-	product_id uuid references products(id),
+	product_id varchar(100) references products(id),
 	quantity int,
 	created_at timestamp,
 	created_by varchar(100),

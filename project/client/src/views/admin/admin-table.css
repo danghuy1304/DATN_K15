@@ -3,15 +3,16 @@
     height: 100%;
 }
 
-.admin-table>table {
+.admin-table table {
     width: 100%;
+    vertical-align: middle;
 }
 
 .admin-table .admin-header {
     padding-bottom: 10px;
 }
 
-.admin-table .admin-header>h1 {
+.admin-table .admin-header > h1 {
     text-align: center;
     font-size: 2.5rem;
     padding-bottom: 20px;
@@ -20,9 +21,10 @@
 .admin-table .admin-header .btn-group {
     display: flex;
     gap: 10px;
+    width: 100%;
 }
 
-.admin-table .admin-header .btn-group>button {
+.admin-table .admin-header .btn-group > button {
     width: fit-content;
     display: block;
 }
@@ -32,47 +34,47 @@
     text-align: center;
 }
 
-.admin-table table .action>button {
+.admin-table table .action > button {
     margin: 0 5px;
     padding: 0 5px;
     border: none;
     background-color: transparent;
 }
 
-.admin-table table .action>button>i {
+.admin-table table .action > button > i {
     font-size: 1.2rem;
 }
 
-.admin-table table .action>button.btn-edit {
+.admin-table table .action > button.btn-edit {
     color: var(--color-orange);
 }
 
-.admin-table table .action>button.btn-delete {
+.admin-table table .action > button.btn-delete {
     color: var(--color-red);
 }
 
-.admin-table table .action>button.btn-confirm>i,
-.admin-table table .action>button.btn-cancel>i {
+.admin-table table .action > button.btn-confirm > i,
+.admin-table table .action > button.btn-cancel > i {
     font-size: 1.3rem;
 }
 
-.admin-table table .action>button.btn-confirm {
+.admin-table table .action > button.btn-confirm {
     color: var(--color-green);
 }
 
-.admin-table table .action>button.btn-cancel {
+.admin-table table .action > button.btn-cancel {
     color: var(--color-red);
 }
 
 .admin-table table .value-too-long {
-    max-width: 200px;
+    max-width: 250px;
 }
 
 .admin-table table .value-too-long.gallery-title {
     max-width: 250px;
 }
 
-.admin-table table .value-too-long>span {
+.admin-table table .value-too-long > span {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -148,7 +150,56 @@
     text-align: center;
 }
 
-.image-gallery>img {
+.image-gallery > img {
     width: 150px;
+}
 
+.table-product {
+    max-height: 480px;
+    overflow-y: scroll;
+}
+
+.th-sort {
+    cursor: pointer;
+    user-select: none;
+}
+
+.btn-group-filter {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+}
+.btn-group-filter .btn-add {
+    width: 20%;
+}
+.btn-search {
+    display: flex;
+    gap: 10px;
+    width: 80%;
+    align-items: center;
+}
+
+.btn-search .check-is-stock {
+    display: flex;
+    align-items: center;
+    width: fit-content;
+}
+
+.btn-search .check-is-stock > label {
+    display: block;
+    text-wrap: unset;
+    width: 60px;
+}
+
+.btn-search > input {
+    padding: 5px 10px;
+}
+.btn-search .btn-search-button {
+    width: 60%;
+}
+.btn-search .btn-search-button > button {
+    display: block;
+    padding: 5px 10px;
+    width: 100%;
 }

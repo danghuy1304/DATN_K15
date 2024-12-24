@@ -47,18 +47,10 @@
                 </div>
                 <div class="product-price">
                     <p v-if="product?.discount > 0" class="price-old">
-                        {{ $formatValue.formatMoney(product?.price) }}
+                        {{ $formatValue.formatMoney(product?.originPrice) }}
                     </p>
                     <p class="price-new">
-                        {{
-                            product?.discount > 0
-                                ? $formatValue.formatMoney(
-                                      (product?.price *
-                                          (100 - product?.discount)) /
-                                          100
-                                  )
-                                : $formatValue.formatMoney(product?.price)
-                        }}
+                        {{ $formatValue.formatMoney(product?.salePrice) }}
                     </p>
                     <div v-if="product?.discount > 0" class="discount">
                         <p>{{ product?.discount }}% GIẢM</p>
@@ -128,6 +120,7 @@ import { useUserStore } from "@/stores/user";
 import { useAuthStore } from "@/stores/auth";
 import { storeToRefs } from "pinia";
 import router from "@/routers/router";
+import { dialog } from "@/helpers/swal";
 
 // --------------------- Khai báo biến ----------------------
 const quantity = ref(1);
@@ -190,6 +183,14 @@ const increment = () => {
 };
 
 const handleAddToCart = () => {
+    if (product.value.quantity === 0) {
+        dialog(
+            "Thêm vào giỏ hàng thất bại",
+            "error",
+            "Sản phẩm bạn chọn đã hết hàng"
+        );
+        return;
+    }
     if (!isLoggedIn.value) {
         router.push({
             name: "Login",
