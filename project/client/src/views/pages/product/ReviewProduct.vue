@@ -88,8 +88,14 @@
                 <div class="review-item">
                     <div class="reviewer-avt">
                         <img
-                            :src="require('@/assets/imgs/white-bear.jpg')"
-                            alt=""
+                            v-if="item?.user?.image"
+                            :src="item?.user?.image"
+                            :alt="item?.user?.userName"
+                        />
+                        <img
+                            v-else
+                            :src="require('@/assets/imgs/avatar.png')"
+                            :alt="item?.user?.userName"
                         />
                     </div>
                     <div class="reviewer-info">
