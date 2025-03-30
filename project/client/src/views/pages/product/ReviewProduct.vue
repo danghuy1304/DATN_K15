@@ -87,7 +87,14 @@
             >
                 <div class="review-item">
                     <div class="reviewer-avt">
-                        <img src="@/assets/imgs/white-bear.jpg" alt="" />
+                        <img
+                            :src="
+                                item?.user?.image
+                                    ? item?.user?.image
+                                    : '@/assets/imgs/avatar.png'
+                            "
+                            :alt="item?.user?.userName"
+                        />
                     </div>
                     <div class="reviewer-info">
                         <label>{{ item?.user?.userName }}</label>
