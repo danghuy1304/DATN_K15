@@ -87,10 +87,7 @@
             >
                 <div class="review-item">
                     <div class="reviewer-avt">
-                        <img
-                            :src="require('@/assets/imgs/white-bear.jpg')"
-                            alt=""
-                        />
+                        <img src="@/assets/imgs/white-bear.jpg" alt="" />
                     </div>
                     <div class="reviewer-info">
                         <label>{{ item?.user?.userName }}</label>
@@ -108,7 +105,7 @@
                                 {{ item?.note }}
                             </p>
                             <!-- <div class="item-content-img">
-                                <img :src="require('@/assets/imgs/Iphone15-promax.webp')" alt="">
+                                <img src='@/assets/imgs/Iphone15-promax.webp' alt="">
                             </div> -->
                         </div>
                     </div>
