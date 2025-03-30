@@ -130,7 +130,7 @@
 <script setup>
 import { useFeedbackStore } from "@/stores/feedback";
 import { storeToRefs } from "pinia";
-import { nextTick, ref, watch, defineProps } from "vue";
+import { nextTick, ref, watch } from "vue";
 import { useRoute } from "vue-router";
 
 const props = defineProps({
