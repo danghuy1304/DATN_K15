@@ -88,13 +88,11 @@
                 <div class="review-item">
                     <div class="reviewer-avt">
                         <img
-                            v-if="item?.user?.image"
-                            :src="item?.user?.image"
-                            :alt="item?.user?.userName"
-                        />
-                        <img
-                            v-else
-                            :src="require('@/assets/imgs/avatar.png')"
+                            :src="
+                                item?.user?.image
+                                    ? item?.user?.image
+                                    : '@/assets/imgs/avatar.png'
+                            "
                             :alt="item?.user?.userName"
                         />
                     </div>
@@ -114,7 +112,7 @@
                                 {{ item?.note }}
                             </p>
                             <!-- <div class="item-content-img">
-                                <img :src="require('@/assets/imgs/Iphone15-promax.webp')" alt="">
+                                <img src='@/assets/imgs/Iphone15-promax.webp' alt="">
                             </div> -->
                         </div>
                     </div>
@@ -139,7 +137,7 @@
 <script setup>
 import { useFeedbackStore } from "@/stores/feedback";
 import { storeToRefs } from "pinia";
-import { nextTick, ref, watch, defineProps } from "vue";
+import { nextTick, ref, watch } from "vue";
 import { useRoute } from "vue-router";
 
 const props = defineProps({
